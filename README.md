@@ -4,7 +4,7 @@ This study applied a deep learning model to classify levels of left ventricular 
 ## Initial Results
 Despite best efforts, the precision for detecting each of the three abnormal classes of LV function (mild, moderate, and severe) was disappointing. Clearly, the advantage of ‘resampling with replacement' could not induce a F1-score beyond 80% for any of the three classes. Furthermore, adding additional features to the embedding matrix such as a TF-IDF weighted matrix (either as uni-gram or n-gram) or an LDA topic distribution matrix, have little effect on improving precision or F-score beyond those reported in the results. This lack of performance improvement shows that adding more features does not necessary equate to better precision. On the contrary, adding too many features could induce more noise into model training.
  
-See [documentation](https://github.com/billy-nz/EchoNLP/tree/master/doc) for complete study report or [log files](https://github.com/billy-nz/EchoNLP/tree/master/log) for raw FPR results (F1-Precision-Recall).
+See [documentation](https://github.com/billy-nz/EchoNLP/tree/master/docs) for complete study report or [log files](https://github.com/billy-nz/EchoNLP/blob/master/log/Top%20Resulte%20FPR.txt) for raw FPR results (F1-Precision-Recall).
 
 ![picture](/images/Normal_9689.png)
 Figure 1 - Accuracy and loss curves (training versus testing) for normal LV function
