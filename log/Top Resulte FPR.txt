@@ -1,0 +1,99 @@
+- Top Performing -
+
+- Normal -
+Training Accuracy: 0.9987
+Testing Accuracy:  0.9689
+Accuracy: 0.968912
+Precision: 0.973913
+Recall: 0.973913
+F1 score: 0.973913
+Cohens kappa: 0.935452
+ROC AUC: 0.986845
+
+-Mild-
+Training Accuracy: 0.9961
+Testing Accuracy:  0.9171
+Accuracy: 0.917098
+Precision: 0.857143
+Recall: 0.731707
+F1 score: 0.789474
+Cohens kappa: 0.738261
+ROC AUC: 0.940629
+
+- Moderate -
+Training Accuracy: 0.9961
+Testing Accuracy:  0.9223
+Accuracy: 0.922280
+Precision: 0.740741
+Recall: 0.714286
+F1 score: 0.727273
+Cohens kappa: 0.681973
+ROC AUC: 0.968615
+
+- Severe - 
+Training Accuracy: 0.9974
+Testing Accuracy:  0.9793
+Accuracy: 0.979275
+Precision: 0.777778
+Recall: 0.777778
+F1 score: 0.777778
+Cohens kappa: 0.766908
+ROC AUC: 0.963768
+
+
+-- Conv1D CNN Model --
+
+Layer (type)                 Output Shape              Param #   
+=================================================================
+embedding_206 (Embedding)    (None, 175, 200)          301800    
+_________________________________________________________________
+spatial_dropout1d_206 (Spati (None, 175, 200)          0         
+_________________________________________________________________
+conv1d_205 (Conv1D)          (None, 175, 64)           64064     
+_________________________________________________________________
+average_pooling1d_205 (Avera (None, 87, 64)            0         
+_________________________________________________________________
+global_max_pooling1d_205 (Gl (None, 64)                0         
+_________________________________________________________________
+dense_409 (Dense)            (None, 10)                650       
+_________________________________________________________________
+dropout_205 (Dropout)        (None, 10)                0         
+_________________________________________________________________
+dense_410 (Dense)            (None, 1)                 11        
+=================================================================
+Total params: 366,525
+Trainable params: 366,525
+Non-trainable params: 0
+
+-- Model Parameteres --
+
+epochs = 15
+batch_size = 32
+embedding_dim = 200
+num_filters = 64
+kernal_size = 5
+
+model = Sequential()
+
+# Layer 1. Word Embedding
+model.add(layers.Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=maxlen))
+# Layer 2: Spatial Dropout
+model.add(layers.SpatialDropout1D(0.25))
+# Layer 3: Convolution ID
+model.add(layers.Conv1D(num_filters, kernal_size, padding='same', activation='relu'))
+# Layer 4: Bidirectional CuDNNLSTM
+#model.add(layers.Bidirectional(layers.LSTM(num_filters, return_sequences=True)))
+#model.add(layers.Conv1D(num_filters*2, kernal_size, activation='relu'))
+# Layer 5: Max Pooling
+model.add(layers.AveragePooling1D())
+model.add(layers.GlobalMaxPool1D())
+# Layer 6: Dense Layer 
+model.add(layers.Dense(10, activation='relu')) 
+# Layer 7: Dropout
+model.add(layers.Dropout(0.25))
+# Layer 8: Output Dense Layer
+model.add(layers.Dense(1, activation='sigmoid')) # down sampling
+
+# Create Model 
+model.compile(optimizer='adam', loss='binary_crossentropy',metrics=['accuracy'])
+model.summary()
